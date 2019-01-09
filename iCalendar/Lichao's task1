@@ -1,0 +1,31 @@
+# ics数据写入
+from ics import Calendar, Event
+
+    c = Calendar()
+    c.version = "2.0"
+    c.prodid  = "-//Payton Inc//Payton Calendar"
+#创建事件
+    e     = Event()
+    name  = input("name: ")
+    begin = input("begin: ")
+    end   = input("end: ")
+    
+    e.name  = name
+    e.begin = begin
+    e.end   = end
+    c.events.add(e)
+    c.events
+#写入事件
+    with open('payton.ics', 'a+') as f:
+        addData = f.writelines(c)
+
+
+# ics数据读取
+#解码并读取
+    f = open('payton.ics', 'rb')
+    c = Calendar(f.read().decode('iso-8859-1'))
+    s = c.events
+#显示事件的结果
+    print(s)
+    e = c.events[0]
+    "Event '{}' started {}".format(e.name, e.begin.humanize())
